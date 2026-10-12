@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suit suitan</title>
+</head>
+<body>
+<style>
+ body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+    margin-top: 50px;
+ }
+
+ .container{
+    background-color: pink;
+    border-radius: 50px;
+    padding : 20px;
+    align-content: center;
+    
+ }
+
+ button{
+    background-color: #89CFF0;
+    border-radius: 10px;
+    margin : 10px;
+    border-color: black;
+    padding: 5px;
+    font-size: medium; 
+ }
+
+#hasil {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+
+</style>
+
+    <div class="container">
+        <h1 id="judulGame"> Game suit suitan</h1>
+
+        <div id="menuUtama" class="menuUtama">
+            <p>Silahkan pilih mau suit apa</p>
+
+            <button onclick="pilihGame('gbk')">✌️✊✋ Gunting Batu Kertas</button><br><br>
+
+            <button onclick="pilihGame('gms')"> 🐘👤🐜 Gajah Manusia Semut</button><br><br>
+
+            <button onclick="pilihGame('jtk')">👍☝️🤙  Jempol Telunjuk Kelingking</button><br><br>
+        </div>
+
+        <div id="areaGame" class="areaGame hidden">
+            <div id="tombolPilihan"></div>
+
+            <button onclick="kembaliKeMenu()">Kembali ke menu</button>
+
+        </div>
+
+        <div id="areaHasil" class="hidden">
+            <div class="infoGame">
+                <p id="pilihanPemain">Pilihan Kamu : </p>
+                <p id="pilihanKomputer">Pilihan Komputer : </p>
+             </div>
+
+        <div id="hasil">Hasil Pertandingan</div>
+
+    </div>
+</div>
+
+    <script>
+        let gameAktif = ""
+
+        function pilihGame(jenis){
+            gameAktif = jenis;
+
+            document.getElementById("menuUtama").classList.add("hidden");
+
+            document.getElementById("areaGame").classList.remove("hidden");
+
+            document.getElementById("areaHasil").classList.remove("hidden");
+
+            const tombolContainer = document.getElementById("tombolPilihan");
+
+
+            if (jenis ==='gbk'){
+                document.getElementById("judulGame").innerText = "Gunting Batu Kertas";
+
+                tombolContainer.innerHTML=`<button onclick="mainGuntingBatuKertas('gunting')">✌️ Gunting</button>
+                <button onclick="mainGuntingBatuKertas('batu')">✊  Batu</button>
+                <button onclick="mainGuntingBatuKertas('kertas')">✋  Kertas</button>
+                `;  
+            }
+            else if(jenis === 'gms'){
+                document.getElementById("judulGame").innerText="Gajah Manusia Semut";
+
+                tombolContainer.innerHTML=`<button onclick = "mainGajahManusiaSemut('gajah')">🐘 Gajah </button>
+                <button onclick = "mainGajahManusiaSemut('manusia')">👤 Manusia </button>
+                <button onclick = "mainGajahManusiaSemut('semut')">🐜 Semut </button>`;
+            }
+
+            else if(jenis ==='jtk'){
+                document.getElementById("judulGame").innerText = "Jempol Telunjuk Kelingking";
+
+                tombolContainer.innerHTML=`<button onclick="mainJempolTelunjukKelingking('jempol')">👍 Jempol </button>
+                <button onclick="mainJempolTelunjukKelingking('telunjuk')">☝️ Telunjuk </button>
+                <button onclick="mainJempolTelunjukKelingking('kelingking')">🤙 Kelingking</button>
+                `;
+            }     
+    }
+
+
+        function mainGuntingBatuKertas(pilihanUser){
+            const pilihan = ["gunting", "batu", "kertas"];
+
+            const pilihanKomputer = pilihan[Math.floor(Math.random()*3)];
+
+            const emoji = {gunting: "✌️ gunting", batu: "✊ Batu", kertas: "✋ Kertas" };
+
+        
+
+        tampilkanPilihan(emoji[pilihanUser], emoji[pilihanKomputer]);
+
+            if (pilihanUser === pilihanKomputer) return cetakHasil("Seri! 🤝");
+            
+            if ((pilihanUser === "batu" && pilihanKomputer === "gunting") ||
+                (pilihanUser === "gunting" && pilihanKomputer === "kertas") ||
+                (pilihanUser === "kertas" && pilihanKomputer === "batu")) {
+                cetakHasil("Kamu Menang! 🎉");
+            } else {
+                cetakHasil("Kamu Kalah! 😢");
+            }
+        }
+        
+        
+         function mainGajahManusiaSemut(pilihanUser) {
+            const pilihan = ["gajah", "manusia", "semut"];
+            const pilihanKomputer = pilihan[Math.floor(Math.random() * 3)];
+            const emoji = { gajah: "🐘 Gajah", manusia: "👤 Manusia", semut: "🐜 Semut" };
+
+
+        tampilkanPilihan(emoji[pilihanUser],emoji[pilihanKomputer]);
+
+        
+
+        if (pilihanUser === pilihanKomputer) return cetakHasil("Seri! 🤝");
+
+            if ((pilihanUser === "gajah" && pilihanKomputer === "manusia") ||
+                (pilihanUser === "manusia" && pilihanKomputer === "semut") ||
+                (pilihanUser === "semut" && pilihanKomputer === "gajah")) {
+                cetakHasil("Kamu Menang! 🎉");
+            } else {
+                cetakHasil("Kamu Kalah! 😢");
+            }
+         }
+
+        function mainJempolTelunjukKelingking(pilihanUser) {
+            const pilihan = ["jempol", "telunjuk", "kelingking"];
+            const pilihanKomputer = pilihan[Math.floor(Math.random() * 3)];
+            const emoji = { jempol: "👍 Jempol", telunjuk: "☝️ Telunjuk", kelingking: "🤙 Kelingking" };
+
+            tampilkanPilihan(emoji[pilihanUser], emoji[pilihanKomputer]);
+
+            if (pilihanUser === pilihanKomputer) return cetakHasil("Seri! 🤝");
+
+            if ((pilihanUser === "jempol" && pilihanKomputer === "telunjuk") ||
+                (pilihanUser === "telunjuk" && pilihanKomputer === "kelingking") ||
+                (pilihanUser === "kelingking" && pilihanKomputer === "jempol")) {
+                cetakHasil("Kamu Menang! 🎉");
+            } else {
+                cetakHasil("Kamu Kalah! 😢");
+            }
+        }
+
+        function tampilkanPilihan(user,komputer){
+
+            document.getElementById("pilihanPemain").innerHTML = "Pilihan Kamu: " + user;
+
+            document.getElementById("pilihanKomputer").innerHTML = "Pilihan Komputer: " + komputer;
+        }
+
+        function cetakHasil(teks){
+            document.getElementById("hasil").innerHTML = teks;
+        }
+
+        function resetTampilanSkor(){
+            tampilkanPilihan("-","-");
+
+            cetakHasil("silahkan pilih karakter");
+
+        }
+
+         function kembaliKeMenu() {
+            document.getElementById("judulGame").innerText = "Pilih Jenis Suit 🎮";
+            document.getElementById("menuUtama").classList.remove("hidden");
+            document.getElementById("areaGame").classList.add("hidden");
+            document.getElementById("areaHasil").classList.add("hidden");
+        }
+
+        
+
+
+    
+
+    </script>
+
+</body>
+</html>
